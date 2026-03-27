@@ -128,18 +128,15 @@ mysql> select *from customer order by name desc;
 
 
 
-10. Display the customer details sorted in ascending by city and descending by names. 
-mysql> insert into customer(cust_id,name,address,city,ph_no)values(131,'Aksa','3D Ripple','Delhi',null);
-Query OK, 1 row affected (0.02 sec)
+10. Display the customer details sorted in ascending by city and descending by names.
 
-mysql> select *from customer;
+mysql> select *from customer ORDER BY city ASC, name DESC;
 +---------+--------+--------------+-------+------------+
 | cust_id | name   | address      | city  | ph_no      |
 +---------+--------+--------------+-------+------------+
 |     101 | Sharma | 2A Confident | Goa   | 9778764562 |
 |     110 | Rajiv  | 3C Opera     | Surat | 6789678978 |
 |     121 | Pooja  | 12B Costa    | Surat | 9298764562 |
-|     131 | Aksa   | 3D Ripple    | Delhi |       NULL |
 +---------+--------+--------------+-------+------------+
 4 rows in set (0.00 sec)
 
