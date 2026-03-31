@@ -35,7 +35,7 @@ mysql> desc customer;
 +---------+-------------+------+-----+---------+-------+
 5 rows in set (0.01 sec)
 
-1. List the customer names of invoice date 3rd February 2023.
+1. List the customer names of invoice date 4th December 2003.
 mysql> select name from customer where cust_id IN(select cust_id from invoice_master where inv_date='2003-12-04');
 +-------+
 | name  |
