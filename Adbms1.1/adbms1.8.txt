@@ -1,7 +1,7 @@
 EXPERIMENT NO: 1.8 OPTIMIZING DATABASE: (JOINS)
 
 
-1. List the product name and quantity of invoice items.mysql> select product.pname, invoice_item.quantity from product inner join invoice_item on product.pid = invoice_item.pid;
+1. List the product name and quantity of invoice items.
 mysql> select product.pname, invoice_item.quantity from product inner join invoice_item on product.pid = invoice_item.pid;
 +--------+----------+
 | pname  | quantity |
