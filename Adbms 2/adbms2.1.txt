@@ -1,0 +1,114 @@
+EXPERIMENT NO: 2.1 - PL/SQL PROGRAMS- STORED PROCEDURES  
+
+
+1)Create a procedure to display all tables in the invoice database. 
+
+mysql> delimiter //
+mysql> create Procedure invoice_list()
+    -> begin
+    -> select * from customer;
+    -> select * from product;
+    -> select * from invoice_item;
+    -> select * from invoice_master;
+    -> end //
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> call invoice_list()
+    -> //
++---------+--------+--------------+-------+------------+
+| cust_id | name   | address      | city  | ph_no      |
++---------+--------+--------------+-------+------------+
+|     101 | Sharma | 2A Confident | Goa   | 9778764562 |
+|     110 | Rajiv  | 3C Opera     | Surat | 6789678978 |
+|     121 | Pooja  | 12B Costa    | Surat | 9298764562 |
+|     131 | Aksa   | 3D Ripple    | Delhi |       NULL |
+|     132 | josh   | 3D Ripple    | Delhi |    2345678 |
+|     133 | Julian | 3E Cansas    | Agra  |    2344478 |
++---------+--------+--------------+-------+------------+
+6 rows in set (0.00 sec)
+
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|  12 | Book   |    66 |
+|  13 | Pen    |    15 |
+|  14 | Eraser |    10 |
++-----+--------+-------+
+3 rows in set (0.00 sec)
+
++----------+--------+------+
+| quantity | inv_id | pid  |
++----------+--------+------+
+|       75 |     21 |   12 |
+|      150 |     22 |   13 |
+|       50 |     23 |   14 |
++----------+--------+------+
+3 rows in set (0.00 sec)
+
++--------+------------+---------+
+| inv_id | inv_date   | cust_id |
++--------+------------+---------+
+|     21 | 2004-09-22 |     110 |
+|     22 | 2004-04-06 |     101 |
+|     23 | 2003-12-04 |     121 |
++--------+------------+---------+
+3 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+
+2)Create a procedure to find greatest of 3 numbers. 
+mysql> delimiter !!
+mysql> create procedure invoice_greatest(a int.b int,c int)
+    -> begin
+    -> if(a>b)and(a>c)then
+    -> select a as 'Greatest';
+    -> elseif(b>a)and(b>c)then
+    -> select b as 'Greatest';
+    -> else
+    -> select c as 'Greatest';
+    -> end if;
+    -> end !!
+
+mysql> call invoice_greatest(2,3,4) !!
++----------+
+| Greatest |
++----------+
+|        4 |
++----------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+3)Create a procedure to display invoice details of a particular customer.
+mysql> delimiter !!
+mysql> CREATE PROCEDURE customer_invoice_details(IN c_id INT)
+    -> begin
+    -> select c.cust_id,c.name,i.inv_id,i.inv_date,p.pname,p.price,
+    -> ii.quantity,
+    -> (p.price * ii.quantity) as total_amount
+    from customer c
+    join invoice_master i on c.cust_id = i.cust_id
+    join invoice_item ii on i.inv_id = ii.inv_id
+    join product p on ii.pid = p.pid
+    where c.cust_id = c_id;
+end //
+
+delimiter ;
+
+CALL customer_invoice_details(101);
+
++---------+--------+--------+------------+--------+-------+----------+--------------+
+| cust_id | name   | inv_id | inv_date   | pname  | price | quantity | total_amount |
++---------+--------+--------+------------+--------+-------+----------+--------------+
+| 101     | Sharma | 22     | 2004-04-06 | Pen    | 15    | 150      | 2250         |
++---------+--------+--------+------------+--------+-------+----------+--------------+
+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+

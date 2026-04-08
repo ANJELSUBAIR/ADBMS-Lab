@@ -1,0 +1,62 @@
+
+EXPERIMENT NO: 2.3 -PL/SQL PROGRAMS – TRIGGER 
+
+
+1)Create a trigger to handle updates to the customer table. 
+
+mysql> create table customer_2(id int,name varchar(15),address varchar(15),city varchar(25),phno bigint); !!
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> create trigger updaterS
+    -> before update
+    -> on customer for each row
+    -> begin
+    -> insert int customer_2
+    -> values(old.cust_id,old.name,old.address,old.city,old.ph_no);
+    -> end !!
+    
+mysql> delimiter !!
+mysql> select *from customer; 
+ mysql>end !!
++---------+--------+--------------+-------+------------+
+| cust_id | name   | address      | city  | ph_no      |
++---------+--------+--------------+-------+------------+
+|     101 | Sharma | 2A Confident | Goa   | 9778764562 |
+|     110 | Rajiv  | 3C Opera     | Surat | 6789678978 |
+|     121 | Pooja  | 12B Costa    | Surat | 9298764562 |
+|     131 | Aksa   | 3D Ripple    | Delhi |       NULL |
+|     132 | josh   | 3D Ripple    | Delhi |    2345678 |
+|     133 | Julian | 3E Cansas    | Agra  |    2344478 |
++---------+--------+--------------+-------+------------+
+6 rows in set (0.00 sec)
+
+2) Create a trigger to handle inserts to the product relation ( if price < 5 the set price to 10). 
+
+
+mysql> delimiter !!
+mysql> create trigger product_price
+    -> before insert
+    -> on product
+    -> for each row
+    -> begin
+    -> if new.price <5 then
+    -> set new.price=10;
+    -> end if;
+    -> end !!
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into product values(23,'ruler',4); end !!
+Query OK, 1 row affected (0.02 sec)
+mysql> delimiter !!
+mysql> select * from product;
+    -> end !!
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|  12 | Book   |    66 |
+|  13 | Pen    |    15 |
+|  14 | Eraser |    10 |
+|  17 | ruler  |    10 |
++-----+--------+-------+
+6 rows in set (0.00 sec)
+
