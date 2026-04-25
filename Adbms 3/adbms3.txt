@@ -1,0 +1,98 @@
+EXPERIMENT NO 3
+
+
+mca@MCA03:~$ sudo docker exec -it mongodb mongosh
+[sudo] password for mca: 
+
+
+test> use mca
+switched to db mca
+mca> use invoice
+switched to db invoice
+invoice> db.createCollection("student")
+{ ok: 1 }
+
+
+
+1. Write a MongoDB query to create an INVOICE database and collections (CUSTOMER, PRODUCT) and its corresponding documents.
+INSERT VALUES
+invoice> db.student.insert({"name":"Tanvi","address": "Costa","age":24})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('69cb9d70e84e4b0a948de666') }
+}
+
+1)INSERT  MULTIPLE VALUES IN SINGLE QUERY
+db.customer.insertMany([
+  {"name":"Aksa","city":"Ernakulam","age":23,"ph_no":9898989898},
+  {"name":"Milen","city":"Kannur","age":23,"ph_no":5898989898},
+  {"name":"Khloe","city":"Calicut","age":18,"ph_no":7676767677},
+])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('69cb9e74e84e4b0a948de667'),
+    '1': ObjectId('69cb9e74e84e4b0a948de668'),
+    '2': ObjectId('69cb9e74e84e4b0a948de669')
+  }
+}
+
+db.product.insertMany([
+  {"p_id":101,"p_name":"Pen","price":10},
+  {"p_id":102,"p_name":"Book","price":50},
+  {"p_id":103,"p_name":"Pencil","price":5}
+])
+
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('69d37740e108fdd5b58de66b'),
+    '1': ObjectId('69d37740e108fdd5b58de66c'),
+    '2': ObjectId('69d37740e108fdd5b58de66d')
+  }
+}
+
+
+2.Write a MongoDB query to find all documents from the collection CUSTOMER 
+db.customer.find().pretty()
+[
+  {
+    _id: ObjectId('69cb9e74e84e4b0a948de667'),
+    name: 'Aksa',
+    city: 'Ernakulam',
+    age: 23
+  },
+  {
+    _id: ObjectId('69cb9e74e84e4b0a948de668'),
+    name: 'Milen',
+    city: 'Kannur',
+    age: 23
+  },
+  {
+    _id: ObjectId('69cb9e74e84e4b0a948de669'),
+    name: 'Khloe',
+    city: 'Calicut',
+    age: 18
+  }
+]
+
+
+3.Write a MongoDB query to update the city in the collection CUSTOMER.
+db.customer.updateOne(
+  {name:"Milen"},
+  {$set:{city:"Kochi"}}
+)
+
+{
+  acknowledged: true,
+  matchedCount: 1,
+  modifiedCount: 1
+}
+
+
+4.Write a MongoDB query to delete the first matched document whose city is “Calicut”. 
+
+db.customer.deleteOne({city:"Calicut"})
+
+{ acknowledged: true, deletedCount: 1 }
