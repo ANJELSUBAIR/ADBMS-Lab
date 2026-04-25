@@ -1,0 +1,45 @@
+Experiment5: NoSQL – AGGREGATE FUNCTIONS AND REGULAR EXPRESSIONS
+
+  
+1.Write a MongoDB query to sort customer details in ascending order of their name.
+
+invoice> db.customer.find().sort({name:1})
+[
+  {
+    _id: ObjectId('69d37740e108fdd5b58de666'),
+    name: 'Aksa',
+    city: 'Ernakulam',
+    age: 23,
+    ph_no: 9898989898
+  },
+
+  {
+    _id: ObjectId('69d37740e108fdd5b58de668'),
+    name: 'Khloe',
+    city: 'Kannur',
+    age: 18,
+    ph_no: 76767676777
+  },
+  {
+    _id: ObjectId('69d37740e108fdd5b58de667'),
+    name: 'Milen',
+    city: 'Kannur',
+    age: 23,
+    ph_no: 5898989898
+  }
+]
+
+2)2.Write a MongoDB query to count number of customers in each city.
+
+invoice> db.customer.aggregate([{$group:{_id:"$city",total:{$sum:1}}}])
+[
+  { _id: 'Ernakulam', total: 1 },
+  { _id: 'Kannur', total: 2 } 
+  ]
+
+3.Write a MongoDB query to find minimum and maximum age in each city.
+invoice> db.customer.aggregate([{$group:{_id:"$city",max_age:{$max:"$age"},min_age:{$min:"$age"}}}])
+[
+  { _id: 'Ernakulam', max_age: 23, min_age: 23 },
+  { _id: 'Kannur', max_age: 23, min_age: 18 }
+]
