@@ -49,7 +49,8 @@ invoice> db.customer.find({"age":{$gt:21}}).pretty();
 
 
 
-3.Write a MongoDB query to find customer documents who not live in ‘tvm’.invoice> db.customer.find({"city":{$ne:"kannur"}}).pretty();
+3.Write a MongoDB query to find customer documents who not live in ‘tvm’.
+invoice> db.customer.find({"city":{$ne:"kannur"}}).pretty();
 [
   {
     _id: ObjectId('69d37740e108fdd5b58de666'),
